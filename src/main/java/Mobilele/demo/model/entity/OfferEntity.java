@@ -2,24 +2,27 @@ package Mobilele.demo.model.entity;
 
 import Mobilele.demo.model.enums.EngineEnum;
 import Mobilele.demo.model.enums.Transmission;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
 
 import java.math.BigDecimal;
+import java.sql.Types;
+import java.util.UUID;
 
 @Entity
 @Table(name = "offers")
 public class OfferEntity extends BaseEntity {
 
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID uuid;
+
     private String description;
     @ManyToOne
     private ModelEntity model;
-
+    @Enumerated(EnumType.STRING)
     private EngineEnum engine;
-
+    @Enumerated(EnumType.STRING)
     private Transmission transmission;
-
     private String imageUrl;
     private long mileage;
     private BigDecimal price;
@@ -97,6 +100,15 @@ public class OfferEntity extends BaseEntity {
 
     public OfferEntity setYear(int year) {
         this.year = year;
+        return this;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public OfferEntity setUuid(UUID uuid) {
+        this.uuid = uuid;
         return this;
     }
 }
