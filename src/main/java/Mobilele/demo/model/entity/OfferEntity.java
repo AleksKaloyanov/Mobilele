@@ -1,7 +1,7 @@
 package Mobilele.demo.model.entity;
 
 import Mobilele.demo.model.enums.EngineEnum;
-import Mobilele.demo.model.enums.Transmission;
+import Mobilele.demo.model.enums.TransmissionEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
@@ -22,7 +22,7 @@ public class OfferEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private EngineEnum engine;
     @Enumerated(EnumType.STRING)
-    private Transmission transmission;
+    private TransmissionEnum transmission;
     private String imageUrl;
     private long mileage;
     private BigDecimal price;
@@ -58,11 +58,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public Transmission getTransmission() {
+    public TransmissionEnum getTransmission() {
         return transmission;
     }
 
-    public OfferEntity setTransmission(Transmission transmission) {
+    public OfferEntity setTransmission(TransmissionEnum transmission) {
         this.transmission = transmission;
         return this;
     }

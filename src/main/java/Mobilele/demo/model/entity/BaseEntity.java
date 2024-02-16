@@ -14,4 +14,13 @@ public abstract class BaseEntity {
 
     public BaseEntity() {
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public BaseEntity setId(long id) {
+        this.id = id;
+        return this;
+    }
 }
