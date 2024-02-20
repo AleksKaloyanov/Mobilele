@@ -3,40 +3,38 @@ package Mobilele.demo.service.impl;
 import Mobilele.demo.model.dto.BrandDTO;
 import Mobilele.demo.model.dto.ModelDto;
 import Mobilele.demo.model.entity.ModelEntity;
+import Mobilele.demo.repository.BrandRepository;
 import Mobilele.demo.repository.ModelRepository;
 import Mobilele.demo.service.BrandService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BrandServiceImpl implements BrandService {
 
     private final ModelRepository modelRepository;
+    private final BrandRepository brandRepository;
 
-    public BrandServiceImpl(ModelRepository modelRepository) {
+    public BrandServiceImpl(ModelRepository modelRepository,
+                            BrandRepository brandRepository) {
         this.modelRepository = modelRepository;
+        this.brandRepository = brandRepository;
     }
 
     @Override
     public List<BrandDTO> getAllBrands() {
+        return brandRepository.findAll().stream()
+                .map(brand -> new BrandDTO(
+                        brand.getBrand(),
+                        modelRepository.findAllByBrandId(brand.getId()).stream()
+                                .map(model -> new ModelDto(model.id(), model.name()))
+                                .sorted(Comparator.comparing(ModelDto::name))
+                                .collect(Collectors.toList())
+                ))
+                .sorted(Comparator.comparing(BrandDTO::name))
+                .collect(Collectors.toList());
 
-        Map<String, BrandDTO> brands = new HashMap<>();
-
-        for (ModelEntity model : modelRepository.findAll()) {
-            if (!brands.containsKey(model.getBrand().getBrand())) {
-                brands.put(model.getBrand().getBrand(),
-                        new BrandDTO(model.getBrand().getBrand(),
-                                new ArrayList<>()));
-            }
-
-            brands.get(model.getBrand().getBrand()).models().add(
-                    new ModelDto(model.getId(), model.getName()));
-        }
-
-        return brands.values().stream().toList();
     }
 }

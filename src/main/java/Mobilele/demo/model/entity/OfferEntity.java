@@ -24,7 +24,7 @@ public class OfferEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TransmissionEnum transmission;
     private String imageUrl;
-    private long mileage;
+    private int mileage;
     private BigDecimal price;
     private int year;
 
@@ -76,11 +76,11 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public long getMileage() {
+    public int getMileage() {
         return mileage;
     }
 
-    public OfferEntity setMileage(long mileage) {
+    public OfferEntity setMileage(int mileage) {
         this.mileage = mileage;
         return this;
     }
