@@ -14,12 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class BrandServiceImpl implements BrandService {
 
-    private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
 
-    public BrandServiceImpl(ModelRepository modelRepository,
-                            BrandRepository brandRepository) {
-        this.modelRepository = modelRepository;
+    public BrandServiceImpl(
+            BrandRepository brandRepository) {
+
         this.brandRepository = brandRepository;
     }
 
@@ -27,9 +26,9 @@ public class BrandServiceImpl implements BrandService {
     public List<BrandDTO> getAllBrands() {
         return brandRepository.findAll().stream()
                 .map(brand -> new BrandDTO(
-                        brand.getBrand(),
-                        modelRepository.findAllByBrandId(brand.getId()).stream()
-                                .map(model -> new ModelDto(model.id(), model.name()))
+                        brand.getName(),
+                        brand.getModels().stream()
+                                .map(model -> new ModelDto(model.getId(), model.getName()))
                                 .sorted(Comparator.comparing(ModelDto::name))
                                 .collect(Collectors.toList())
                 ))
