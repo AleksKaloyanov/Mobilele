@@ -3,7 +3,6 @@ package Mobilele.demo.model.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.PropertyAccessException;
 import org.springframework.beans.PropertyAccessorFactory;
 
 import java.util.Objects;
@@ -38,6 +37,6 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
                     .disableDefaultConstraintViolation();
         }
 
-        return false;
+        return isValid;
     }
 }
